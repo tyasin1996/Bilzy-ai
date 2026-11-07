@@ -1,0 +1,172 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Bilzy | Admin Dashboard</title>
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f3f5f9;
+      color: #172033;
+    }
+    header {
+      background: #14213d;
+      color: white;
+      padding: 22px;
+    }
+    header h1 { margin: 0; }
+    header p { color: #cbd5e1; }
+    main { padding: 20px; max-width: 1100px; margin: auto; }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 15px;
+    }
+    .card {
+      background: white;
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 2px 8px #0000000d;
+    }
+    .number { font-size: 30px; font-weight: bold; }
+    input, select, button {
+      padding: 12px;
+      margin: 6px 0;
+      width: 100%;
+      border-radius: 8px;
+      border: 1px solid #ddd;
+      font-size: 15px;
+    }
+    button {
+      background: #2563eb;
+      color: white;
+      border: 0;
+      cursor: pointer;
+    }
+    .danger { background: #dc2626; }
+    .item {
+      padding: 12px 0;
+      border-bottom: 1px solid #ddd;
+    }
+    .muted { color: #64748b; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Bilzy Admin</h1>
+    <p>Marketplace Management Dashboard</p>
+  </header>
+
+  <main>
+    <div class="grid">
+      <div class="card">
+        <p>Products</p>
+        <div class="number" id="productsCount">0</div>
+      </div>
+      <div class="card">
+        <p>Orders</p>
+        <div class="number">0</div>
+      </div>
+      <div class="card">
+        <p>Customers</p>
+        <div class="number">0</div>
+      </div>
+      <div class="card">
+        <p>Revenue</p>
+        <div class="number">$0</div>
+      </div>
+    </div>
+
+    <h2>Manage Products</h2>
+    <div class="card">
+      <form id="productForm">
+        <input id="name" placeholder="Product name" required>
+        <input id="price" type="number" min="0.01"
+          step="0.01" placeholder="Price ($)" required>
+        <select id="category">
+          <option>Electronics</option>
+          <option>Fashion</option>
+          <option>Home</option>
+          <option>Automotive</option>
+          <option>Other</option>
+        </select>
+        <button type="submit">Add Product</button>
+      </form>
+    </div>
+
+    <h2>Product Listings</h2>
+    <div class="card" id="productList"></div>
+
+    <p class="muted">
+      Demo dashboard. Products are saved only in this
+      browser and are not published to the marketplace.
+    </p>
+  </main>
+
+  <script>
+    const key = "bilzy_admin_demo_products";
+    let products = JSON.parse(localStorage.getItem(key) || "[]");
+
+    function save() {
+      localStorage.setItem(key, JSON.stringify(products));
+    }
+
+    function render() {
+      document.getElementById("productsCount").textContent =
+        products.length;
+
+      const list = document.getElementById("productList");
+      list.replaceChildren();
+
+      if (products.length === 0) {
+        list.textContent = "No products yet.";
+        return;
+      }
+
+      products.forEach((product, index) => {
+        const item = document.createElement("div");
+        item.className = "item";
+
+        const title = document.createElement("strong");
+        title.textContent = product.name;
+
+        const details = document.createElement("p");
+        details.textContent =
+          product.category + " | $" + Number(product.price).toFixed(2);
+
+        const remove = document.createElement("button");
+        remove.className = "danger";
+        remove.textContent = "Delete";
+        remove.onclick = () => {
+          products.splice(index, 1);
+          save();
+          render();
+        };
+
+        item.append(title, details, remove);
+        list.appendChild(item);
+      });
+    }
+
+    document.getElementById("productForm").onsubmit = (event) => {
+      event.preventDefault();
+
+      products.push({
+        name: document.getElementById("name").value.trim(),
+        price: document.getElementById("price").value,
+        category: document.getElementById("category").value
+      });
+
+      save();
+      event.target.reset();
+      render();
+    };
+
+    render();
+  </script>
+</body>
+</html>
