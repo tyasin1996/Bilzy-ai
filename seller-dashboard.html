@@ -1,1 +1,84 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bilzy Seller Dashboard</title>
+<style>
+body{font-family:Arial;background:#f4f6fa;margin:0;color:#222}
+header{background:#1769e0;color:white;padding:22px;text-align:center}
+main{padding:18px;max-width:800px;margin:auto}
+.card{background:white;padding:18px;margin:12px 0;border-radius:12px;box-shadow:0 2px 8px #ddd}
+input,textarea{box-sizing:border-box;width:100%;padding:12px;margin:8px 0;border:1px solid #ccc;border-radius:8px}
+button{background:#1769e0;color:white;border:0;border-radius:8px;padding:12px;margin:5px 4px 5px 0}
+.danger{background:#c62828}
+</style>
+</head>
+<body>
+<header><h1>Bilzy Seller Center</h1><p>Manage Your Products</p></header>
+<main>
+<a href="index.html">Back to Marketplace</a>
+<div class="card"><h2>My Products: <span id="count">0</span></h2><p>Orders: 0 | Sales: $0</p></div>
+<div class="card">
+<h2>Add Product</h2>
+<form id="form">
+<input id="productName" placeholder="Product name" required>
+<input id="price" type="number" min="0.01" step="0.01" placeholder="Price in dollars" required>
+<textarea id="description" placeholder="Product description" required></textarea>
+<button type="submit">Save Product</button>
+</form>
+</div>
+<div class="card"><h2>My Listings</h2><div id="list"></div></div>
+<p>This is a demo. Products are stored only in this browser.</p>
+</main>
+<script>
+const key="bilzyDemoProducts";
+let products=[];
+try{products=JSON.parse(localStorage.getItem(key)||"[]")}catch(e){}
+if(!Array.isArray(products))products=[];
+const list=document.getElementById("list");
+function render(){
+list.replaceChildren();
+document.getElementById("count").textContent=products.length;
+products.forEach((p,i)=>{
+const box=document.createElement("div");
+const title=document.createElement("strong");
+title.textContent=p.name+" - $"+p.price;
+const desc=document.createElement("p");
+desc.textContent=p.description;
+const del=document.createElement("button");
+del.textContent="Delete";
+del.className="danger";
+del.onclick=()=>{
+products.splice(i,1);
+save();
+};
+box.append(title,desc,del);
+list.appendChild(box);
+});
+}
+function save(){
+localStorage.setItem(key,JSON.stringify(products));
+render();
+}
+document.getElementById("form").onsubmit=e=>{
+e.preventDefault();
+const name=document.getElementById("productName").value.trim();
+const price=document.getElementById("price").value;
+const description=document.getElementById("description").value.trim();
+products.push({name,price,description});
+try{
+save();
+e.target.reset();
+alert("Product saved in this browser!");
+}catch(err){
+products.pop();
+alert("Could not save product.");
+}
+};
+render();
+</script>
+</body>
+</html>
+  
