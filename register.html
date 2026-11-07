@@ -57,12 +57,25 @@
     <p><a href="index.html">Back to Marketplace</a></p>
   </div>
 
-  <script>
-    document.getElementById("sellerForm").addEventListener("submit", function(e) {
-      e.preventDefault();
-      document.getElementById("message").textContent =
-        "Registration form works! Seller accounts are coming soon.";
-    });
-  </script>
+
+<script>
+document.getElementById("sellerForm").addEventListener("submit", function(e) {
+  e.preventDefault();
+
+  const name = document.getElementById("name").value.trim();
+  const store = document.getElementById("store").value.trim();
+  const email = document.getElementById("email").value.trim();
+
+  const message = document.getElementById("message");
+
+  if (!name || !store || !email) {
+    message.textContent = "Please fill in all fields.";
+    return;
+  }
+
+  message.textContent = "Form submitted successfully! Seller account registration is coming soon.";
+});
+</script>
+
 </body>
 </html>
