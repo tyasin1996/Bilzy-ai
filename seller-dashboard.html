@@ -75,6 +75,8 @@ products.forEach((p,i)=>{
 const box=document.createElement("div");
 const title=document.createElement("strong");
 title.textContent=p.name+" - $"+p.price;
+const cat=document.createElement("p");
+cat.textContent="Category: "+(p.category||"Other");
 const desc=document.createElement("p");
 desc.textContent=p.description;
 const del=document.createElement("button");
@@ -84,7 +86,7 @@ del.onclick=()=>{
 products.splice(i,1);
 save();
 };
-box.append(title,desc,del);
+box.append(title,cat,desc,del);
 list.appendChild(box);
 });
 }
@@ -96,8 +98,9 @@ document.getElementById("form").onsubmit=e=>{
 e.preventDefault();
 const name=document.getElementById("productName").value.trim();
 const price=document.getElementById("price").value;
+const category=document.getElementById("category").value;
 const description=document.getElementById("description").value.trim();
-products.push({name,price,description});
+products.push({name,price,category,description});
 try{
 save();
 e.target.reset();
