@@ -74,6 +74,17 @@ document.getElementById("sellerForm").addEventListener("submit", function(e) {
   }
 
   message.textContent = "Form submitted successfully! Seller account registration is coming soon.";
+  
+const sellers = JSON.parse(localStorage.getItem("bilzySellers") || "[]");
+
+sellers.push({
+  name: name,
+  store: store,
+  email: email
+});
+
+localStorage.setItem("bilzySellers", JSON.stringify(sellers));
+
 });
 </script>
 
