@@ -82,6 +82,8 @@ const items=[
 {name:"Kids Toy Car",price:19.99,cat:"Toys",icon:"🚗"},
 {name:"Building Blocks",price:34.99,cat:"Toys",icon:"🧱"}
 ];
+const savedProducts = JSON.parse(localStorage.getItem("bilzyProducts") || "[]");
+items.push(...savedProducts);
 let selected="All";
 let cart=[];
 
