@@ -75,6 +75,17 @@ function render(){
 list.replaceChildren();
 document.getElementById("count").textContent=products.length;
 products.forEach((p,i)=>{
+  
+const img=document.createElement("img");
+if(p.photo){
+  img.src=p.photo;
+  img.alt=p.name;
+  img.style.width="120px";
+  img.style.height="120px";
+  img.style.objectFit="cover";
+  img.style.borderRadius="8px";
+}
+
 const box=document.createElement("div");
 const title=document.createElement("strong");
 title.textContent=p.name+" - $"+p.price;
