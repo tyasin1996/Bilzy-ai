@@ -83,6 +83,7 @@ const items=[
 {name:"Building Blocks",price:34.99,cat:"Toys",icon:"🧱"}
 ];
 items.push({name:"iPhone 16",price:699,cat:"Electronics",icon:"📱"});
+
 const savedProducts = JSON.parse(localStorage.getItem("bilzyProducts") || "[]");
 items.push(...savedProducts);
 let selected="All";
