@@ -1,49 +1,141 @@
+
 <!DOCTYPE html>
-
 <html lang="en">
-
 <head>
-
 <meta charset="UTF-8">
-
 <meta name="viewport" content="width=device-width, initial-scale=1">
-
 <title>Bilzy AI | Smart Marketplace</title>
-
 <style>
-
 *{box-sizing:border-box}
+body{margin:0;font-family:Arial,sans-serif;background:#f4f6fa;color:#172033}
+header{background:#101b38;color:white;padding:22px 16px}
+nav{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.logo{font-size:27px;font-weight:800;color:#67e8f9}
+.cart{background:#24365b;border:0;border-radius:12px;padding:11px;color:white}
+.hero{text-align:center;padding:35px 12px}
+.hero h1{font-size:32px;margin:0 0 12px}
+.hero p{color:#d6e2f5}
+.search{display:flex;max-width:650px;margin:22px auto 0}
+.search input{flex:1;min-width:0;padding:15px;border:0;border-radius:12px 0 0 12px;font-size:16px}
+.search button{background:#06b6d4;color:#071525;border:0;padding:14px;border-radius:0 12px 12px 0;font-weight:bold}
+main{max-width:1150px;margin:auto;padding:20px 15px}
+h2{font-size:23px}
+.categories{display:flex;gap:10px;overflow-x:auto;padding:8px 0 22px}
+.categories button{border:1px solid #d8dfeb;background:white;border-radius:25px;padding:12px 17px;white-space:nowrap}
+.categories button.active{background:#101b38;color:white}
+.products{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.product{background:white;border-radius:17px;overflow:hidden;box-shadow:0 3px 14px #182c4512}
+.picture{height:125px;background:#e8f4ff;display:grid;place-items:center;font-size:65px}
+.info{padding:14px}
+.info h3{font-size:16px;margin:5px 0}
+.price{font-size:20px;font-weight:bold;color:#0b7285}
+.info p{color:#64748b;font-size:13px}
+.buy{width:100%;background:#101b38;color:white;border:0;border-radius:9px;padding:12px;font-weight:bold}
+footer{text-align:center;padding:30px;color:#64748b}
+@media(min-width:700px){
+.products{grid-template-columns:repeat(4,1fr)}
+.picture{height:175px}
+.hero h1{font-size:44px}
+}
+</style>
+</head>
+<body>
 
-body{margin:0;font-family:Arial,sans-serif;background:#f4f7fb;color:#17233b}
+<header>
+<nav>
+<div class="logo">✦ Bilzy AI</div>
+<button class="cart" onclick="showCart()">🛒 Cart (<span id="count">0</span>)</button>
+</nav>
+<section class="hero">
+<h1>Shop Smarter with Bilzy AI</h1>
+<p>Discover great products. Buy and sell with ease.</p>
+<div class="search">
+<input id="search" placeholder="Search products..." oninput="render()">
+<button onclick="render()">Search</button>
+</div>
+</section>
+</header>
 
-header{background:#101c35;color:white;padding:18px 5%;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
+<main>
+<h2>Explore Categories</h2>
+<div class="categories" id="categories"></div>
+<h2>Featured Products</h2>
+<div class="products" id="products"></div>
+<p id="empty" style="display:none;text-align:center">No products found.</p>
+</main>
 
-.logo{font-size:27px;font-weight:800;color:#69a9ff}
+<footer>
+<p>© 2026 Bilzy AI Marketplace</p>
+<p>Buy smarter. Sell easier.</p>
+<p>Demo website — payments not yet enabled.</p>
+</footer>
 
-nav a{color:white;text-decoration:none;margin:0 10px}
+<script>
+const items=[
+{name:"Wireless Headphones",price:49.99,cat:"Electronics",icon:"🎧"},
+{name:"Smart Watch",price:89.99,cat:"Electronics",icon:"⌚"},
+{name:"Running Shoes",price:64.99,cat:"Fashion",icon:"👟"},
+{name:"Travel Backpack",price:39.99,cat:"Fashion",icon:"🎒"},
+{name:"Coffee Maker",price:79.99,cat:"Home",icon:"☕"},
+{name:"Table Lamp",price:29.99,cat:"Home",icon:"💡"},
+{name:"Kids Toy Car",price:19.99,cat:"Toys",icon:"🚗"},
+{name:"Building Blocks",price:34.99,cat:"Toys",icon:"🧱"}
+];
+let selected="All";
+let cart=[];
 
-button{cursor:pointer;border:0;border-radius:9px;padding:12px 18px;font-weight:bold}
+function renderCategories(){
+const cats=["All","Electronics","Fashion","Home","Toys"];
+document.getElementById("categories").innerHTML=cats.map(c=>
+`<button class="${selected===c?'active':''}" onclick="selectCategory('${c}')">${c}</button>`
+).join("");
+}
 
-.primary{background:#3478f6;color:white}
+function selectCategory(c){
+selected=c;
+renderCategories();
+render();
+}
 
-.hero{background:linear-gradient(125deg,#101c35,#245bb6);color:white;text-align:center;padding:65px 18px}
+function render(){
+const q=document.getElementById("search").value.toLowerCase();
+const filtered=items.filter(p=>
+(selected==="All"||p.cat===selected)&&
+p.name.toLowerCase().includes(q)
+);
+document.getElementById("products").innerHTML=filtered.map(p=>{
+const i=items.indexOf(p);
+return `<article class="product">
+<div class="picture">${p.icon}</div>
+<div class="info">
+<p>${p.cat}</p>
+<h3>${p.name}</h3>
+<div class="price">$${p.price.toFixed(2)}</div>
+<p>Sample marketplace listing</p>
+<button class="buy" onclick="addCart(${i})">Add to Cart</button>
+</div></article>`;
+}).join("");
+document.getElementById("empty").style.display=filtered.length?"none":"block";
+}
 
-.hero h1{font-size:clamp(30px,5vw,52px);margin:0 0 15px}
+function addCart(i){
+cart.push(items[i]);
+document.getElementById("count").textContent=cart.length;
+alert(items[i].name+" added to cart!");
+}
 
-.hero p{color:#dce8ff}
+function showCart(){
+if(!cart.length){
+alert("Your cart is empty.");
+return;
+}
+const total=cart.reduce((s,p)=>s+p.price,0);
+alert("Items: "+cart.length+"\nTotal: $"+total.toFixed(2)+"\n\nCheckout coming soon!");
+}
 
-.search{display:flex;max-width:650px;margin:25px auto 0;background:white;border-radius:12px;padding:6px}
+renderCategories();
+render();
+</script>
+</body>
+</html>
 
-.search input{flex:1;min-width:0;border:0;outline:0;padding:13px;font-size:16px}
-
-.container{max-width:1150px;margin:auto;padding:35px 18px}
-
-h2{font-size:25px}
-
-.categories{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:30px}
-
-.category{background:white;border:1px solid #dce4ef;color:#17233b}
-
-.category.active{background:#3478f6;color:white}
-
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:20px}
