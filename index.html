@@ -16,36 +16,36 @@
 
 *{box-sizing:border-box}
 
-body{margin:0;font-family:Arial,sans-serif;background:#f5f7fb;color:#17243b}
+body{margin:0;font-family:Arial,sans-serif;background:#f4f7fb;color:#17233b}
 
-header{background:#101c36;color:white;padding:18px 5%;display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+header{background:#101c35;color:white;padding:18px 5%;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:12px}
 
-.logo{font-size:28px;font-weight:900;color:#58a6ff}
+.logo{font-size:27px;font-weight:800;color:#69a9ff}
 
-.logo span{color:#fff}
+nav a{color:white;text-decoration:none;margin:0 10px}
 
-button{cursor:pointer;border:0;border-radius:10px;padding:12px 17px;font-weight:bold}
+button{cursor:pointer;border:0;border-radius:9px;padding:12px 18px;font-weight:bold}
 
-.sell{background:#317bff;color:white}
+.primary{background:#3478f6;color:white}
 
-.hero{background:linear-gradient(125deg,#101c36,#164bb2);color:white;text-align:center;padding:65px 18px}
+.hero{background:linear-gradient(125deg,#101c35,#245bb6);color:white;text-align:center;padding:65px 18px}
 
-.hero h1{font-size:clamp(30px,6vw,52px);margin:0 0 15px}
+.hero h1{font-size:clamp(30px,5vw,52px);margin:0 0 15px}
 
-.hero p{color:#dce7ff;font-size:17px}
+.hero p{color:#dce8ff}
 
-.search{display:flex;max-width:650px;margin:28px auto 0;background:white;border-radius:12px;padding:6px}
+.search{display:flex;max-width:650px;margin:25px auto 0;background:white;border-radius:12px;padding:6px}
 
 .search input{flex:1;min-width:0;border:0;outline:0;padding:13px;font-size:16px}
 
-.search button{background:#317bff;color:white}
+.container{max-width:1150px;margin:auto;padding:35px 18px}
 
-.container{max-width:1200px;margin:auto;padding:35px 5%}
+h2{font-size:25px}
 
-h2{margin:0 0 20px}
+.categories{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:30px}
 
-.categories{display:flex;gap:10px;overflow-x:auto;padding-bottom:20px}
+.category{background:white;border:1px solid #dce4ef;color:#17233b}
 
-.category{background:white;border:1px solid #dde3ed;white-space:nowrap;color:#17243b}
+.category.active{background:#3478f6;color:white}
 
-.category.active{background:#317bff;color:white}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:20px}
