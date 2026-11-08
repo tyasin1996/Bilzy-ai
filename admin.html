@@ -1,4 +1,4 @@
-
+no
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -363,6 +363,57 @@ button.onclick = () => {
     sellers.filter(s => s.status === "Suspended").length;
 }
 
+
+const reviewProducts = [
+  {name:"Wireless Headphones",seller:"Demo Seller 1",status:"Pending"},
+  {name:"Smart Watch",seller:"Demo Seller 2",status:"Pending"},
+  {name:"Bluetooth Speaker",seller:"Demo Seller 3",status:"Approved"}
+];
+
+function renderProductReviews() {
+  const list = document.getElementById("productReviewList");
+  list.replaceChildren();
+
+  reviewProducts.forEach((product, index) => {
+    const card = document.createElement("div");
+    card.className = "item";
+
+    const title = document.createElement("h3");
+    title.textContent = product.name;
+
+    const seller = document.createElement("p");
+    seller.textContent = "Seller: " + product.seller;
+
+    const status = document.createElement("p");
+    status.textContent = "Status: " + product.status;
+
+    card.append(title, seller, status);
+
+    ["Approved", "Rejected", "Flagged"].forEach(action => {
+      const button = document.createElement("button");
+      button.type = "button";
+      button.textContent = action === "Flagged" ? "Flag for Review" : action;
+
+      button.onclick = () => {
+        reviewProducts[index].status = action;
+        renderProductReviews();
+      };
+
+      card.appendChild(button);
+    });
+
+    list.appendChild(card);
+  });
+
+  document.getElementById("pendingProducts").textContent =
+    reviewProducts.filter(p => p.status === "Pending").length;
+
+  document.getElementById("approvedProducts").textContent =
+    reviewProducts.filter(p => p.status === "Approved").length;
+
+  document.getElementById("rejectedProducts").textContent =
+    reviewProducts.filter(p => p.status === "Rejected").length;
+}
 
 renderSellers();
 
