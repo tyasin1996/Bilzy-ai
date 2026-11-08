@@ -100,6 +100,23 @@
   <div class="card">
     <h3>Seller Applications</h3>
 
+<div style="margin:15px 0;">
+  <input
+    id="sellerSearch"
+    type="search"
+    placeholder="Search seller or store..."
+    oninput="renderSellers()"
+  >
+
+  <select id="sellerFilter" onchange="renderSellers()">
+    <option value="All">All Sellers</option>
+    <option value="Pending">Pending</option>
+    <option value="Approved">Approved</option>
+    <option value="Rejected">Rejected</option>
+    <option value="Suspended">Suspended</option>
+  </select>
+</div>
+
     <p class="muted">
       Demo preview - database not connected.
     </p>
