@@ -220,6 +220,17 @@ const sellers = [
   { name: "Demo Seller 3", store: "Home Essentials", status: "Approved" }
 ];
 
+const sellerHistory = [];
+
+function recordSellerDecision(seller, oldStatus, newStatus) {
+  sellerHistory.unshift({
+    store: seller.store,
+    previousStatus: oldStatus,
+    newStatus: newStatus,
+    date: new Date().toLocaleString()
+  });
+}
+
 function renderSellers() {
   const list = document.getElementById("sellerList");
   list.replaceChildren();
