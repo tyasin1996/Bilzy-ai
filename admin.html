@@ -224,6 +224,17 @@ function renderSellers() {
   const list = document.getElementById("sellerList");
   list.replaceChildren();
 
+const search = document.getElementById("sellerSearch").value.toLowerCase().trim();
+const filter = document.getElementById("sellerFilter").value;
+
+const visibleSellers = sellers
+  .map((seller, index) => ({ seller, index }))
+  .filter(({ seller }) =>
+    (filter === "All" || seller.status === filter) &&
+    (seller.store.toLowerCase().includes(search) ||
+     seller.name.toLowerCase().includes(search))
+  );
+
   sellers.forEach((seller, index) => {
     const card = document.createElement("div");
     card.style.cssText =
