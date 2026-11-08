@@ -198,24 +198,57 @@
     };
 
 
-function setSellerStatus(status) {
-  const allowed = ["Approved", "Rejected", "Suspended"];
-  if (!allowed.includes(status)) return;
+fu
+const sellers = [
+  { name: "Demo Seller 1", store: "Bilzy Electronics", status: "Pending" },
+  { name: "Demo Seller 2", store: "Fashion Hub", status: "Pending" },
+  { name: "Demo Seller 3", store: "Home Essentials", status: "Approved" }
+];
 
-  const sellerStatus = document.getElementById("sellerStatus");
-  sellerStatus.textContent = status;
-  sellerStatus.style.color =
-    status === "Approved" ? "green" :
-    status === "Rejected" ? "red" : "orange";
+function renderSellers() {
+  const list = document.getElementById("sellerList");
+  list.replaceChildren();
 
-  document.getElementById("pendingCount").textContent = "0";
+  sellers.forEach((seller, index) => {
+    const card = document.createElement("div");
+    card.style.cssText =
+      "border:1px solid #ddd;padding:15px;border-radius:10px;margin:12px 0";
+
+    const title = document.createElement("h3");
+    title.textContent = seller.store;
+
+    const name = document.createElement("p");
+    name.textContent = "Applicant: " + seller.name;
+
+    const status = document.createElement("p");
+    status.textContent = "Status: " + seller.status;
+
+    card.append(title, name, status);
+
+    ["Approved", "Rejected", "Suspended"].forEach(action => {
+      const button = document.createElement("button");
+      button.type = "button";
+      button.textContent = action;
+      button.onclick = () => {
+        sellers[index].status = action;
+        renderSellers();
+      };
+      card.appendChild(button);
+    });
+
+    list.appendChild(card);
+  });
+
+  document.getElementById("pendingCount").textContent =
+    sellers.filter(s => s.status === "Pending").length;
+
   document.getElementById("approvedCount").textContent =
-    status === "Approved" ? "1" : "0";
-  document.getElementById("suspendedCount").textContent =
-    status === "Suspended" ? "1" : "0";
+    sellers.filter(s => s.status === "Approved").length;
 
-  alert("Demo seller status changed to: " + status);
+  document.getElementById("suspendedCount").textContent =
+    sellers.filter(s => s.status === "Suspended").length;
 }
+
 
 
     render();
