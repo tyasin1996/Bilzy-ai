@@ -105,6 +105,18 @@
     <p class="muted">
       Demo preview - database not connected.
     </p>
+    
+<div id="sellerDemo" style="border:1px solid #ddd;padding:15px;border-radius:10px;margin-top:15px;">
+  <h3>Sample Seller Application</h3>
+  <p><strong>Store:</strong> Bilzy Test Store</p>
+  <p><strong>Applicant:</strong> Demo Seller</p>
+  <p><strong>Status:</strong> <span id="sellerStatus">Pending</span></p>
+
+  <button type="button" onclick="setSellerStatus('Approved')">Approve</button>
+  <button type="button" onclick="setSellerStatus('Rejected')">Reject</button>
+  <button type="button" onclick="setSellerStatus('Suspended')">Suspend</button>
+</div>
+
   </div>
 </section>
 
