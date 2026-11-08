@@ -238,6 +238,39 @@ function recordSellerDecision(seller, oldStatus, newStatus) {
   });
 }
 
+function renderSellerHistory() {
+  const list = document.getElementById("sellerHistoryList");
+  if (!list) return;
+
+  list.replaceChildren();
+
+  if (sellerHistory.length === 0) {
+    const empty = document.createElement("p");
+    empty.className = "muted";
+    empty.textContent = "No decisions recorded yet.";
+    list.appendChild(empty);
+    return;
+  }
+
+  sellerHistory.forEach(entry => {
+    const item = document.createElement("div");
+    item.className = "item";
+
+    const title = document.createElement("strong");
+    title.textContent = entry.store;
+
+    const details = document.createElement("p");
+    details.textContent =
+      entry.previousStatus + " → " + entry.newStatus;
+
+    const date = document.createElement("small");
+    date.textContent = entry.date;
+
+    item.append(title, details, date);
+    list.appendChild(item);
+  });
+}
+
 function renderSellers() {
   const list = document.getElementById("sellerList");
   list.replaceChildren();
