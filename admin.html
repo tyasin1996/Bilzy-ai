@@ -236,6 +236,7 @@ function recordSellerDecision(seller, oldStatus, newStatus) {
     newStatus: newStatus,
     date: new Date().toLocaleString()
   });
+  renderSellerHistory();
 }
 
 function renderSellerHistory() {
