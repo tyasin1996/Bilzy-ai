@@ -205,6 +205,19 @@
       render();
     };
 
+function setSellerStatus(status) {
+  const allowed = ["Approved", "Rejected", "Suspended"];
+  if (!allowed.includes(status)) return;
+
+  const sellerStatus = document.getElementById("sellerStatus");
+  sellerStatus.textContent = status;
+  sellerStatus.style.color =
+    status === "Approved" ? "green" :
+    status === "Rejected" ? "red" : "orange";
+
+  alert("Demo seller status changed to: " + status);
+}
+
     render();
   </script>
 </body>
