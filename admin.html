@@ -235,7 +235,9 @@ const visibleSellers = sellers
      seller.name.toLowerCase().includes(search))
   );
 
-  sellers.forEach((seller, index) => {
+  
+visibleSellers.forEach(({ seller, index }) => {
+
     const card = document.createElement("div");
     card.style.cssText =
       "border:1px solid #ddd;padding:15px;border-radius:10px;margin:12px 0";
