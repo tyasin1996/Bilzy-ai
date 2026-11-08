@@ -268,10 +268,17 @@ visibleSellers.forEach(({ seller, index }) => {
       const button = document.createElement("button");
       button.type = "button";
       button.textContent = action;
-      button.onclick = () => {
-        sellers[index].status = action;
-        renderSellers();
-      };
+
+button.onclick = () => {
+  const oldStatus = sellers[index].status;
+
+  if (oldStatus === action) return;
+
+  recordSellerDecision(sellers[index], oldStatus, action);
+  sellers[index].status = action;
+  renderSellers();
+};
+
       card.appendChild(button);
     });
 
