@@ -163,11 +163,13 @@ const total=cart.reduce((s,p)=>s+p.price,0);
 alert("Items: "+cart.length+"\nTotal: $"+total.toFixed(2)+"\n\nCheckout coming soon!");
 }
 
+
 function toggleMenu(){
   const menu = document.getElementById("bilzyMenu");
-  const isHidden = getComputedStyle(menu).display === "none";
-  menu.style.display = isHidden ? "block" : "none";
+  const isOpen = menu.style.left === "0px";
+  menu.style.left = isOpen ? "-100%" : "0px";
 }
+
 
 renderCategories();
 render();
