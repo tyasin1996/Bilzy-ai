@@ -159,6 +159,12 @@ const total=cart.reduce((s,p)=>s+p.price,0);
 alert("Items: "+cart.length+"\nTotal: $"+total.toFixed(2)+"\n\nCheckout coming soon!");
 }
 
+function toggleMenu(){
+  const menu = document.getElementById("bilzyMenu");
+  const isHidden = getComputedStyle(menu).display === "none";
+  menu.style.display = isHidden ? "block" : "none";
+}
+
 renderCategories();
 render();
 </script>
