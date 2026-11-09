@@ -392,10 +392,12 @@ function renderProductReviews() {
   const list = document.getElementById("productReviewList");
   list.replaceChildren();
   const search = document.getElementById("productSearch")?.value.toLowerCase().trim() || "";
+  const filter = document.getElementById("productFilter")?.value || "All";
   reviewProducts.forEach((product, index) => {
     if (
   !product.name.toLowerCase().includes(search) &&
   !product.seller.toLowerCase().includes(search)
+  if (filter !== "All" && product.status !== filter) return;
 ) return;
     const card = document.createElement("div");
     card.className = "item";
