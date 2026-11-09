@@ -163,6 +163,17 @@ id="productSearch"
   oninput="renderProductReviews()"
   style="width:100%;padding:12px;margin:10px 0;"
 >
+<select
+  id="productFilter"
+  onchange="renderProductReviews()"
+  style="width:100%;padding:12px;margin:10px 0;"
+>
+  <option value="All">All Products</option>
+  <option value="Pending">Pending</option>
+  <option value="Approved">Approved</option>
+  <option value="Rejected">Rejected</option>
+  <option value="Flagged">Flagged</option>
+</select>
     <p class="muted">Demo preview - products not connected.</p>
     <div id="productReviewList"></div>
   </div>
