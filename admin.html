@@ -380,8 +380,12 @@ const reviewProducts = [
 function renderProductReviews() {
   const list = document.getElementById("productReviewList");
   list.replaceChildren();
-
+  const search = document.getElementById("productSearch")?.value.toLowerCase().trim() || "";
   reviewProducts.forEach((product, index) => {
+    if (
+  !product.name.toLowerCase().includes(search) &&
+  !product.seller.toLowerCase().includes(search)
+) return;
     const card = document.createElement("div");
     card.className = "item";
 
