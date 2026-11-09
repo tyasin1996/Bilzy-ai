@@ -160,7 +160,26 @@ let selected="All";
 let cart=[];
 
 function renderCategories(){
-const cats=["All","Electronics","Fashion","Home","Toys"];
+const cats = [
+  "All",
+  "Electronics",
+  "Fashion",
+  "Home",
+  "Kitchen & Dining",
+  "Garden & Outdoor",
+  "Tools & Home Improvement",
+  "Automotive",
+  "Beauty & Personal Care",
+  "Toys",
+  "Sports & Fitness",
+  "Pet Supplies",
+  "Books & Office",
+  "Baby & Kids",
+  "Furniture",
+  "Jewelry & Watches",
+  "Gaming"
+];
+
 document.getElementById("categories").innerHTML=cats.map(c=>
 `<button class="${selected===c?'active':''}" onclick="selectCategory('${c}')">${c}</button>`
 ).join("");
